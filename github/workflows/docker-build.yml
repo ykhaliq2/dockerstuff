@@ -18,8 +18,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t DOCKERHUB_USERNAME/REPOSITORY_NAME:latest .
+          docker build -t ykhaliq2/flask-compute:latest .
       
       - name: Push Docker image
         run: |
-          docker push DOCKERHUB_USERNAME/REPOSITORY_NAME:latest
+          docker push ykhaliq2/flask-compute:latest
