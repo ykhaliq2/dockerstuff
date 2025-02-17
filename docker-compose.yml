@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   flask-app:
-    image: ykhaliq2/myflaskapp:latest  # Pull latest image
+    image: ykhaliq2/flask-compute:latest  # Pull latest image
     ports:
       - "8080:8080"  # Map port 8080
     container_name: flask_compute
