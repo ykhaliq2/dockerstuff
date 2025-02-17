@@ -2,12 +2,8 @@ version: '3.8'
 
 services:
   flask-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ykhaliq2/myflaskapp:latest  # Pull latest image
     ports:
-      - "8080:8080"
-    container_name: myflaskapp
+      - "8080:8080"  # Map port 8080
+    container_name: flask_compute
     restart: unless-stopped
-
-
