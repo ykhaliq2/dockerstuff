@@ -2,18 +2,12 @@ Bootstrap: docker
 From: python:3.9
 
 %post
-    # Use bash shell for the post section
-    /bin/bash
-    
-    # Update and install required packages
+    # Use POSIX-compliant shell commands
     apt-get update && apt-get install -y \
-        bash \
         curl \
         python3-pip
-        
-    # Clean up after installing packages
     apt-get clean
-
+    
     # Install Flask
     pip install flask
 
