@@ -2,15 +2,23 @@ Bootstrap: docker
 From: python:3.9
 
 %post
+    # Use bash shell for the post section
+    /bin/bash
+    
     # Update and install required packages
     apt-get update && apt-get install -y \
         bash \
         curl \
-        python3-pip \
-        && rm -rf /var/lib/apt/lists/*
+        python3-pip
+        
+    # Clean up after installing packages
+    apt-get clean
 
     # Install Flask
     pip install flask
+
+    # Make app.py executable (optional)
+    chmod +x /app.py
 
 %files
     app.py /app.py
@@ -19,6 +27,7 @@ From: python:3.9
     export FLASK_APP=/app.py
     export FLASK_RUN_HOST=0.0.0.0
     export FLASK_RUN_PORT=5000
+    export PATH=/usr/local/bin:$PATH
 
 %runscript
-    python3 /app.py
+    exec python3 /app.py
