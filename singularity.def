@@ -1,25 +1,13 @@
 Bootstrap: docker
-From: python:3.7
+From: ykhaliq2/flask-docker-app:latest
+
 %post
-    apt-get update && apt-get install -y \
-        curl \
-        python3-pip
-    apt-get clean
-
-    # Install Flask
-    pip install flask
-
-    # Make app.py executable (optional)
-    chmod +x /app.py
-
-%files
-    app.py /app.py
+    # Install additional dependencies if needed
+    apt-get update && apt-get install -y curl
 
 %environment
-    export FLASK_APP=/app.py
-    export FLASK_RUN_HOST=0.0.0.0
-    export FLASK_RUN_PORT=5000
-    export PATH=/usr/local/bin:$PATH
+    export FLASK_ENV=production
 
 %runscript
-    exec python3 /app.py
+    # Start the Flask application
+    exec python /app/app.py
