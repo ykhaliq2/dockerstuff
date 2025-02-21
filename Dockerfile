@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.9-slim AS builder
+FROM python:3.9-slim
 
 # Set working directory
 WORKDIR /app
@@ -8,27 +8,13 @@ WORKDIR /app
 ARG GITHUB_URL
 RUN apt-get update && apt-get install -y curl && \
     curl -O ${GITHUB_URL}requirements.txt && \
-    curl -O ${GITHUB_URL}app.py && \
-    curl -O ${GITHUB_URL}build_and_run.sh
+    curl -O ${GITHUB_URL}app.py
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Apptainer inside the container
-RUN apt-get install -y wget build-essential libseccomp-dev uuid-dev \
-    libgpgme-dev squashfs-tools libseccomp2 && \
-    wget https://github.com/apptainer/apptainer/releases/download/v1.2.0/apptainer-1.2.0.tar.gz && \
-    tar -xzf apptainer-1.2.0.tar.gz && \
-    cd apptainer-1.2.0 && \
-    ./mconfig && \
-    make -C ./builddir && \
-    make -C ./builddir install
-
-# Make the script executable
-RUN chmod +x /app/build_and_run.sh
-
 # Expose port for Flask
 EXPOSE 5000
 
-# Set entrypoint using absolute path
-ENTRYPOINT ["/bin/bash", "-c", "/app/build_and_run.sh"]
+# Run the Flask app
+CMD ["python", "app.py"]
