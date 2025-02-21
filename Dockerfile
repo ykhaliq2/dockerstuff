@@ -1,17 +1,20 @@
-# Base Image
-FROM python:3.8-slim
+# Base image
+FROM python:3.9-slim
 
-# Set Working Directory
+# Set working directory
 WORKDIR /app
 
-# Copy Application Files
-COPY . /app
+# Get necessary files from GitHub
+ARG GITHUB_URL
+RUN apt-get update && apt-get install -y curl && \
+    curl -O ${GITHUB_URL}requirements.txt && \
+    curl -O ${GITHUB_URL}app.py
 
-# Install Dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose Port
+# Expose port for Flask
 EXPOSE 5000
 
-# Start the Flask application
+# Run the Flask app
 CMD ["python", "app.py"]
