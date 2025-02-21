@@ -1,13 +1,13 @@
-Bootstrap: docker
-From: python:3.8-slim
+Bootstrap: library
+From: ubuntu:22.04
 
 %post
-    # Use POSIX-compliant shell commands
     apt-get update && apt-get install -y \
-        curl \
-        python3-pip
+        python3 \
+        python3-pip \
+        curl
     apt-get clean
-    
+
     # Install Flask
     pip install flask
 
