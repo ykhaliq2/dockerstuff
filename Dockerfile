@@ -24,7 +24,7 @@ RUN apt-get install -y wget build-essential libseccomp-dev uuid-dev \
     make -C ./builddir install
 
 # Copy entrypoint script
-COPY build_and_run.sh /app/
+COPY build_and_run.sh /app/build_and_run.sh
 RUN chmod +x /app/build_and_run.sh
 
 # Expose port for Flask
