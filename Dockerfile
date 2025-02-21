@@ -8,7 +8,8 @@ WORKDIR /app
 ARG GITHUB_URL
 RUN apt-get update && apt-get install -y curl && \
     curl -O ${GITHUB_URL}requirements.txt && \
-    curl -O ${GITHUB_URL}app.py
+    curl -O ${GITHUB_URL}app.py && \
+    curl -O ${GITHUB_URL}build_and_run.sh
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -23,9 +24,11 @@ RUN apt-get install -y wget build-essential libseccomp-dev uuid-dev \
     make -C ./builddir && \
     make -C ./builddir install
 
-# Copy entrypoint script
-COPY build_and_run.sh /app/build_and_run.sh
+# Make the script executable
 RUN chmod +x /app/build_and_run.sh
 
 # Expose port for Flask
 EXPOSE 5000
+
+# Set entrypoint
+ENTRYPOINT ["/bin/bash", "/app/build_and_run.sh"]
