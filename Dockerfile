@@ -1,25 +1,13 @@
-# Base image
-FROM python:3.9-slim
+FROM ubuntu:20.04
 
-# Set working directory
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update packages, install Python3, pip, and Flask
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    pip3 install flask && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
-
-# Install curl to download files
-RUN apt-get update && apt-get install -y curl
-
-# Set Default GitHub URL and Allow Overriding
-ARG GITHUB_URL=https://raw.githubusercontent.com/ykhaliq2/flask-docker-app/main/
-ENV GITHUB_URL=${GITHUB_URL}
-
-# Download necessary files directly from GitHub
-RUN curl -O ${GITHUB_URL}requirements.txt && \
-    curl -O ${GITHUB_URL}app.py
-
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Expose port for Flask
-EXPOSE 5000
-
-# Run the Flask app directly
-CMD ["python", "app.py"]
+COPY Files/app.py /app/
+CMD ["python3","/app/app.py"]
