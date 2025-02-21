@@ -30,5 +30,5 @@ RUN chmod +x /app/build_and_run.sh
 # Expose port for Flask
 EXPOSE 5000
 
-# Set entrypoint
-ENTRYPOINT ["/bin/bash", "/app/build_and_run.sh"]
+# Set entrypoint using absolute path
+ENTRYPOINT ["/bin/bash", "-c", "/app/build_and_run.sh"]
