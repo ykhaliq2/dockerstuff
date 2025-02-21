@@ -1,6 +1,5 @@
 Bootstrap: docker
-From: python:3.8-slim
-
+From: python:3.9
 %post
     apt-get update && apt-get install -y \
         curl \
