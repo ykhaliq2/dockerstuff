@@ -1,6 +1,8 @@
 Bootstrap: library
 From: ubuntu:22.04
 
+%setup
+    export SINGULARITY_ARCH=amd64
 %post
     apt-get update && apt-get install -y \
         python3 \
